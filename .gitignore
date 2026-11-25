@@ -1,0 +1,21 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+venv/
+.env
+# generated outputs
+data/processed/
+data/reports/
+data/*.db
+data/*.db-*
+artifacts/models/*
+artifacts/reports/*
+!artifacts/models/.gitkeep
+!artifacts/reports/.gitkeep
+config/settings.json
+*.log
+# planning notes and source datasets (kept local only)
+plan.md
+data/raw/
+*.csv
