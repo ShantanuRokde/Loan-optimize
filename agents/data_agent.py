@@ -189,6 +189,13 @@ class DataIntelligenceAgent(BaseAgent):
         return f
 
 
+def current_data_hash(config: AppConfig | None = None) -> str | None:
+    """Hash of the source data behind the current processed build."""
+    cfg = config or get_config()
+    p = cfg.processed_dir / BUILD_META
+    return json.loads(p.read_text()).get("data_hash") if p.exists() else None
+
+
 def get_processed_datasets(config: AppConfig | None = None):
     """Accessor used by downstream agents. Raises if Agent 1 has not run."""
     cfg = config or get_config()

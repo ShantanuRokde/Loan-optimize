@@ -54,6 +54,7 @@ class QualificationThresholds(BaseModel):
 class CohortConfig(BaseModel):
     selected_cohort: str | None = Field(None, description="None = auto-select weakest eligible cohort")
     min_mature_quarters: int = Field(3, ge=2)
+    min_cohort_defaults: int = Field(20, ge=1, description="Minimum defaults across mature quarters for a cohort to be ranked")
     control_limit_sd: Literal[1, 2] = 2
 
 

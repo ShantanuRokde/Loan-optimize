@@ -38,6 +38,28 @@ class AgentResult:
         })
 
 
+def save_report(name: str, payload: dict) -> str:
+    """Persist an agent's full result payload as JSON (served to the UI / Copilot)."""
+    import json
+
+    from backend.config import get_config
+
+    d = get_config().reports_dir
+    d.mkdir(parents=True, exist_ok=True)
+    p = d / f"{name}.json"
+    p.write_text(json.dumps(to_jsonable(payload), indent=1), encoding="utf-8")
+    return str(p)
+
+
+def load_report(name: str) -> dict | None:
+    import json
+
+    from backend.config import get_config
+
+    p = get_config().reports_dir / f"{name}.json"
+    return json.loads(p.read_text(encoding="utf-8")) if p.exists() else None
+
+
 class AgentError(RuntimeError):
     """Raised by an agent for an expected, explainable failure."""
 
