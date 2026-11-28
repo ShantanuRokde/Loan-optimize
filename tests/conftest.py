@@ -74,6 +74,7 @@ def synthetic_env(tmp_path):
     cfg.datasets.raw_dir = str(raw)
     cfg.datasets.processed_dir = str(tmp_path / "processed")
     cfg.datasets.reports_dir = str(tmp_path / "reports")
+    cfg.artifacts_dir = str(tmp_path / "artifacts")
     cfg.datasets.application_file = files["application"]
     cfg.datasets.disbursement_file = files["disbursement"]
     cfg.datasets.repayment_file = files["repayment"]
@@ -94,6 +95,7 @@ def real_env(tmp_path):
         pytest.skip("real source CSVs not present in data/raw")
     cfg.datasets.processed_dir = str(tmp_path / "processed")
     cfg.datasets.reports_dir = str(tmp_path / "reports")
+    cfg.artifacts_dir = str(tmp_path / "artifacts")
     cfg.database.url = f"sqlite:///{(tmp_path / 'real.db').as_posix()}"
     dispose_engine()
     set_config(cfg)

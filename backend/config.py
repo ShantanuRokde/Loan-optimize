@@ -60,7 +60,7 @@ class CohortConfig(BaseModel):
 
 class TreeConfig(BaseModel):
     max_depth: int = Field(4, ge=1, le=12)
-    min_samples_leaf: int = Field(40, ge=1)
+    min_samples_leaf: int = Field(50, ge=1, description="Matches the production minimum-loans threshold for a rule")
     class_weight: Literal["balanced", "none"] = "balanced"
     random_state: int = 42
     train_challenger: bool = True
@@ -95,6 +95,7 @@ class AppConfig(BaseModel):
     llm: LLMConfig = LLMConfig()
     database: DatabaseConfig = DatabaseConfig()
     default_actor: str = "analyst"
+    artifacts_dir: str = "artifacts"
 
     # ---------------------------------------------------------- helpers
     def path(self, rel: str) -> Path:
@@ -115,11 +116,11 @@ class AppConfig(BaseModel):
 
     @property
     def models_dir(self) -> Path:
-        return PROJECT_ROOT / "artifacts" / "models"
+        return self.path(self.artifacts_dir) / "models"
 
     @property
     def artifact_reports_dir(self) -> Path:
-        return PROJECT_ROOT / "artifacts" / "reports"
+        return self.path(self.artifacts_dir) / "reports"
 
     def source_files(self) -> dict[str, Path]:
         d = self.datasets
